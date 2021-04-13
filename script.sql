@@ -253,27 +253,25 @@ create unique index tickets_id_uindex
 
 
 
-
-
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('A');
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('B');
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('C');
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('D');
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('E');
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('F');
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('G');
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('I');
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('J');
-INSERT INTO sector (name)
+INSERT INTO sectors (name)
 VALUES ('K');
 
 INSERT INTO places (sector_id, name)
@@ -508,4 +506,5 @@ INSERT INTO tickets (account_id, schedule_id, place_id, date_of_issue, paid, res
 values (1, 8, 3, now(), true, true, true);
 INSERT INTO tickets (account_id, schedule_id, place_id, date_of_issue)
 values (1, 9, 4, now());
-INSERT INTO tickets (account_id, schedule_id, place_id, date_of_issue, paid, reservation) valuAes (1,10,5,now(),true,true);
+INSERT INTO tickets (account_id, schedule_id, place_id, date_of_issue, paid, reservation)
+values (1, 10, 5, now(), true, true);
