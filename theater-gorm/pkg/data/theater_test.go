@@ -24,6 +24,10 @@ func TestInit(t *testing.T) {
 	suite.Run(t, new(Suite))
 }
 
+func (s *Suite) AfterTest(_, _ string) {
+	s.SetupSuite()
+}
+
 func (s *Suite) SetupSuite() {
 	var (
 		db  *sql.DB
@@ -180,7 +184,6 @@ var testUser1 = &User{
 }
 
 func (s *Suite) TestTheaterData_ReadAllTickets() {
-	//s.mock.ExpectBegin()
 	rows := sqlmock.NewRows([]string{"tickets.id", "performance.name", "genres.name", "performance.duration", "schedule.date",
 		"halls.name", "halls.capacity", "locations.address", "locations.phone_number", "sectors.name", "places.name", "price.price",
 		"tickets.date_of_issue", "tickets.paid", "tickets.reservation", "tickets.destroyed"}).
@@ -188,7 +191,7 @@ func (s *Suite) TestTheaterData_ReadAllTickets() {
 			testTicket.DateTime, testTicket.HallName, testTicket.HallCapacity, testTicket.LocationAddress, testTicket.LocationPhoneNumber,
 			testTicket.SectorName, testTicket.Place, testTicket.Price, testTicket.DateOfIssue, testTicket.Paid, testTicket.Reservation,
 			testTicket.Destroyed)
-	s.mock.ExpectQuery(`SELECT tickets.id, performances.name, genres.name, performances.duration, schedules.date, halls.name, 
+	s.mock.ExpectQuery(regexp.QuoteMeta(`SELECT tickets.id, performances.name, genres.name, performances.duration, schedules.date, halls.name,
 halls.capacity, locations.address, locations.phone_number, sectors.name, places.name, prices.price, tickets.date_of_issue, tickets.paid, 
 tickets.reservation, tickets.destroyed FROM "tickets" 
 JOIN schedules on schedules.id = tickets.schedule_id 
@@ -197,16 +200,15 @@ JOIN genres on performances.genre_id = genres.id
 JOIN halls on schedules.hall_id = halls.id 
 JOIN locations on halls.location_id = locations.id 
 JOIN places on tickets.place_id = places.id JOIN sectors on places.sector_id = sectors.id 
-JOIN prices on performances.id = prices.performance_id and sectors.id = prices.sector_id`).
+JOIN prices on performances.id = prices.performance_id and sectors.id = prices.sector_id`)).
 		WillReturnRows(rows)
-	//s.mock.ExpectCommit()
 	res, err := s.data.ReadAllTickets()
 	require.NoError(s.T(), err)
 	require.Nil(s.T(), deep.Equal(testTicket, &res[0]))
 }
 
 func (s *Suite) TestTheaterData_ReadAllTicketsErr() {
-	s.mock.ExpectQuery(`SELECT tickets.id, performances.name, genres.name, performances.duration, schedules.date, halls.name, 
+	s.mock.ExpectQuery(regexp.QuoteMeta(`SELECT tickets.id, performances.name, genres.name, performances.duration, schedules.date, halls.name, 
 halls.capacity, locations.address, locations.phone_number, sectors.name, places.name, prices.price, tickets.date_of_issue, tickets.paid, 
 tickets.reservation, tickets.destroyed FROM "tickets" 
 JOIN schedules on schedules.id = tickets.schedule_id 
@@ -215,7 +217,7 @@ JOIN genres on performances.genre_id = genres.id
 JOIN halls on schedules.hall_id = halls.id 
 JOIN locations on halls.location_id = locations.id 
 JOIN places on tickets.place_id = places.id JOIN sectors on places.sector_id = sectors.id 
-JOIN prices on performances.id = prices.performance_id and sectors.id = prices.sector_id`).
+JOIN prices on performances.id = prices.performance_id and sectors.id = prices.sector_id`)).
 		WillReturnError(errors.New("something went wrong"))
 	users, err := s.data.ReadAllTickets()
 	require.Error(s.T(), err)
@@ -291,7 +293,7 @@ func (s *Suite) TestTheaterData_FindByIdAccount() {
 	s.mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "accounts" WHERE "accounts"."id" = $1 ORDER BY "accounts"."id" ASC LIMIT 1`)).
 		WithArgs(testAccount.Id).
 		WillReturnRows(rows)
-	res, err := s.data.FindByIdAccount(Account{Id: 1})
+	res, err := s.data.FindByIdAccount(Account{Id: 4})
 	require.NoError(s.T(), err)
 	require.Nil(s.T(), deep.Equal(testAccount, &res))
 }
