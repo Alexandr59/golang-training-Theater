@@ -1,14 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net"
 	"net/http"
 	"os"
 
-	"github.com/Alexandr59/golang-training-Theater/theater-gorm/pkg/api"
+	"golang-training-Theater/theater-gorm/api"
+	//"github.com/Alexandr59/golang-training-Theater/theater-gorm/api"
 	"github.com/Alexandr59/golang-training-Theater/theater-gorm/pkg/data"
 	"github.com/Alexandr59/golang-training-Theater/theater-gorm/pkg/db"
 )
@@ -51,8 +51,7 @@ func main() {
 	theaterData := data.NewTheaterData(conn)
 
 	r := mux.NewRouter()
-	ServerTheaterResource
-	r.HandleFunc("/helloWorld", hello)
+	api.ServerTheaterResource(r, *theaterData)
 	r.Use(mux.CORSMethodMiddleware(r))
 
 	listener, err := net.Listen("tcp", ":8080")
