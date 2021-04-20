@@ -1,11 +1,13 @@
 package main
 
 import (
-	"go-training-spring-2021/task_3/theater-no-orm/pkg/data"
-	"go-training-spring-2021/task_3/theater-no-orm/pkg/db"
-
 	"log"
 	"os"
+
+	//"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/data"
+	//"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/db"
+	"golang-training-Theater/theater-no-orm/pkg/data"
+	"golang-training-Theater/theater-no-orm/pkg/db"
 )
 
 var (
