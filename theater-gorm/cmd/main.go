@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"go-training-spring-2021/task_3/theater-gorm/pkg/data"
-	"go-training-spring-2021/task_3/theater-gorm/pkg/db"
-
 	"log"
 	"os"
+
+	//"github.com/Alexandr59/golang-training-Theater/theater-gorm/pkg/data"
+	//"github.com/Alexandr59/golang-training-Theater/theater-gorm/pkg/db"
+	"golang-training-Theater/theater-gorm/pkg/data"
+	"golang-training-Theater/theater-gorm/pkg/db"
 )
 
 var (
