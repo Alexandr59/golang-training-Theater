@@ -4,10 +4,8 @@ import (
 	"log"
 	"os"
 
-	//"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/data"
-	//"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/db"
-	"golang-training-Theater/theater-no-orm/pkg/data"
-	"golang-training-Theater/theater-no-orm/pkg/db"
+	"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/data"
+	"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/db"
 )
 
 var (
