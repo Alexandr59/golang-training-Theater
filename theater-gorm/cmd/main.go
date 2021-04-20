@@ -2,9 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"log"
+	"net"
+	"net/http"
 	"os"
 
+	"github.com/Alexandr59/golang-training-Theater/theater-gorm/pkg/api"
 	"github.com/Alexandr59/golang-training-Theater/theater-gorm/pkg/data"
 	"github.com/Alexandr59/golang-training-Theater/theater-gorm/pkg/db"
 )
@@ -46,6 +50,19 @@ func main() {
 	}
 	theaterData := data.NewTheaterData(conn)
 
+	r := mux.NewRouter()
+	ServerTheaterResource
+	r.HandleFunc("/helloWorld", hello)
+	r.Use(mux.CORSMethodMiddleware(r))
+
+	listener, err := net.Listen("tcp", ":8080")
+	if err != nil {
+		log.Fatal("Server doesn't listen port...", err)
+	}
+	if err := http.Serve(listener, r); err != nil {
+		log.Fatal("Server has been crashed...", err)
+	}
+
 	//err = theaterData.UpdateAccount(data.Account{
 	//	Id:          11,
 	//	FirstName:   "YYYYYYY",
@@ -75,27 +92,27 @@ func main() {
 	//
 	//fmt.Println(a)
 
-	tickets, err := theaterData.ReadAllTickets()
-	if err != nil {
-		log.Fatalf("got an error when tried to call ReadAllTickets method: %v", err)
-	}
-	for _, el := range tickets {
-		fmt.Println(el)
-	}
-
-	posters, err := theaterData.ReadAllPosters()
-	if err != nil {
-		log.Fatalf("got an error when tried to call ReadAllPosters method: %v", err)
-	}
-	for _, el := range posters {
-		log.Println(el)
-	}
-
-	users, err := theaterData.ReadAllUsers(data.Account{Id: 1})
-	if err != nil {
-		log.Fatalf("got an error when tried to call ReadAllUsers method: %v", err)
-	}
-	for _, el := range users {
-		log.Println(el)
-	}
+	//tickets, err := theaterData.ReadAllTickets()
+	//if err != nil {
+	//	log.Fatalf("got an error when tried to call ReadAllTickets method: %v", err)
+	//}
+	//for _, el := range tickets {
+	//	fmt.Println(el)
+	//}
+	//
+	//posters, err := theaterData.ReadAllPosters()
+	//if err != nil {
+	//	log.Fatalf("got an error when tried to call ReadAllPosters method: %v", err)
+	//}
+	//for _, el := range posters {
+	//	log.Println(el)
+	//}
+	//
+	//users, err := theaterData.ReadAllUsers(data.Account{Id: 1})
+	//if err != nil {
+	//	log.Fatalf("got an error when tried to call ReadAllUsers method: %v", err)
+	//}
+	//for _, el := range users {
+	//	log.Println(el)
+	//}
 }
