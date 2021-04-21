@@ -4,8 +4,8 @@
 
 ##### Full Stack Application for storing theater
 
-|Path|Method|Description|
-|:---:|:---:|:---:|
+|Path|Method|Description|Body example|
+|:---:|:---:|:---:|:---|
 |```/tickets```|```GET```|get all tickets|
 |```/posters```|```GET```|get all posters|
 |```/users?idAccount={id}```|```GET```|get all users by ```account```|
@@ -35,32 +35,32 @@
 |```/sector?id={id}```|```DELETE```|delete sector by ```id```|
 |```/ticket?id={id}```|```DELETE```|delete ticket by ```id```|
 |```/user?id={id}```|```DELETE```|delete user by ```id```|
-|```/account```|```POST```|create new account|
-|```/genre```|```POST```|create new genre|
-|```/hall```|```POST```|create new hall|
-|```/location```|```POST```|create new location|
-|```/performance```|```POST```|create new performance|
-|```/place```|```POST```|create new place|
-|```/poster```|```POST```|create new poster|
-|```/price```|```POST```|create new price|
-|```/role```|```POST```|create new role|
-|```/schedule```|```POST```|create new schedule|
-|```/sector```|```POST```|create new sector|
-|```/ticket```|```POST```|create new ticket|
-|```/user```|```POST```|create new user|
-|```/account```|```PUT```|update account|
-|```/genre```|```PUT```|update genre|
-|```/hall```|```PUT```|update hall|
-|```/location```|```PUT```|update location|
-|```/performance```|```PUT```|update performance|
-|```/place```|```PUT```|update place|
-|```/poster```|```PUT```|update poster|
-|```/price```|```PUT```|update price|
-|```/role```|```PUT```|update role|
-|```/schedule```|```PUT```|update schedule|
-|```/sector```|```PUT```|update sector|
-|```/ticket```|```PUT```|update ticket|
-|```/user```|```PUT```|update user|
+|```/account```|```POST```|create new account|```{"FirstName":"ExampleFirstName","LastName":"ExampleLastName","PhoneNumber":"ExamplePhoneNumber","Email":"Example@gmail.com"}```|
+|```/genre```|```POST```|create new genre|```{"Name":"ExampleName"}```|
+|```/hall```|```POST```|create new hall|```{"AccountId":"1","Name":"ExampleName","Capacity":"9999","LocationId":"1"}```|
+|```/location```|```POST```|create new location|```{"AccountId":"1","Address":"ExampleAddress","PhoneNumber":"+777777777777"}```|
+|```/performance```|```POST```|create new performance|```{"AccountId":"1","Name":"ExampleName","GenreId":"1","Duration":"1:00"}```|
+|```/place```|```POST```|create new place|```{"SectorId":"10","Name":"1"}```|
+|```/poster```|```POST```|create new poster|```{"AccountId":"1","ScheduleId":"6","Comment":"ExampleCommit"}```|
+|```/price```|```POST```|create new price|```{"AccountId":"1","SectorId":"9","PerformanceId":"1","Price":"99"}```|
+|```/role```|```POST```|create new role|```{"Name":"ExampleName"}```|
+|```/schedule```|```POST```|create new schedule|```{"AccountId":"1","PerformanceId":"1","Date":"2021-04-25 13:00","HallId":"1"}```|
+|```/sector```|```POST```|create new sector|```{"Name":"ExampleName"}```|
+|```/ticket```|```POST```|create new ticket|```{"AccountId":"1","ScheduleId":"6","PlaceId":"1","DateOfIssue":"now()","paid":"true","reservation":"true","destroyed":"true"}```|
+|```/user```|```POST```|create new user|```{"AccountId":"1","FirstName":"ExampleFirstName","LastName":"ExampleLastName","RoleId":"1","LocationId":"1","PhoneNumber":"+777777777777"}```|
+|```/account```|```PUT```|update account|```{"Id":"18","FirstName":"ExampleFirstName","LastName":"ExampleLastName","PhoneNumber":"ExamplePhoneNumber","Email":"Example@gmail.com"}```|
+|```/genre```|```PUT```|update genre|```{"Id":"12","Name":"ExampleName"}```|
+|```/hall```|```PUT```|update hall|```{"Id":"6","AccountId":"1","Name":"ExampleName","Capacity":"9999","LocationId":"1"}```|
+|```/location```|```PUT```|update location|```{"Id":"6","AccountId":"1","Address":"ExampleAddress","PhoneNumber":"+777777777777"}```|
+|```/performance```|```PUT```|update performance|```{"Id":"6","AccountId":"1","Name":"ExampleName","GenreId":"1","Duration":"1:00"}```|
+|```/place```|```PUT```|update place|```{"Id":"11","SectorId":"10","Name":"2"}```|
+|```/poster```|```PUT```|update poster|```{"Id":"7","AccountId":"1","ScheduleId":"6","Comment":"ExampleCommit"}```|
+|```/price```|```PUT```|update price|```{"Id":"36",AccountId":"1","SectorId":"9","PerformanceId":"1","Price":"99"}```|
+|```/role```|```PUT```|update role|```{"Id":"8","Name":"ExampleName"}```|
+|```/schedule```|```PUT```|update schedule|```{"Id":"11","AccountId":"1","PerformanceId":"1","Date":"2021-04-25 13:00","HallId":"1"}```|
+|```/sector```|```PUT```|update sector|```{"Id":"19","Name":"ExampleName"}```|
+|```/ticket```|```PUT```|update ticket|```{"Id":"26","AccountId":"1","ScheduleId":"6","PlaceId":"1","DateOfIssue":"now()","paid":"true","reservation":"true","destroyed":"true"}```|
+|```/user```|```PUT```|update user|```{"Id":"8","AccountId":"1","FirstName":"ExampleFirstName","LastName":"ExampleLastName","RoleId":"1","LocationId":"1","PhoneNumber":"+777777777777"}```|
 
 ## Usage
 
