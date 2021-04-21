@@ -4,8 +4,8 @@
 
 ##### Full Stack Application for storing theater
 
-|Path|Method|Description|Body example|
-|:---:|:---:|:---:|:---|
+|Path|Method|Description|
+|:---:|:---:|:---:|
 |```/tickets```|```GET```|get all tickets|
 |```/posters```|```GET```|get all posters|
 |```/users?idAccount={id}```|```GET```|get all users by ```account```|
@@ -35,6 +35,9 @@
 |```/sector?id={id}```|```DELETE```|delete sector by ```id```|
 |```/ticket?id={id}```|```DELETE```|delete ticket by ```id```|
 |```/user?id={id}```|```DELETE```|delete user by ```id```|
+
+|Path|Method|Description|Body example|
+|:---:|:---:|:---:|:---|
 |```/account```|```POST```|create new account|```{"FirstName":"ExampleFirstName","LastName":"ExampleLastName","PhoneNumber":"ExamplePhoneNumber","Email":"Example@gmail.com"}```|
 |```/genre```|```POST```|create new genre|```{"Name":"ExampleName"}```|
 |```/hall```|```POST```|create new hall|```{"AccountId":"1","Name":"ExampleName","Capacity":"9999","LocationId":"1"}```|
