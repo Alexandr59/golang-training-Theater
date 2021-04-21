@@ -62,21 +62,19 @@ func ServerTheaterResource(r *mux.Router, data data.TheaterData) {
 	r.HandleFunc("/ticket", api.createTicket).Methods("POST")
 	r.HandleFunc("/user", api.createUser).Methods("POST")
 
-	//r.HandleFunc("/account", api.updateAccount).Methods("PUT")
-	//r.HandleFunc("/genre", api.updateGenre).Methods("PUT")
-	//r.HandleFunc("/hall", api.updateHall).Methods("PUT")
-	//r.HandleFunc("/location", api.updateLocation).Methods("PUT")
-	//r.HandleFunc("/performance", api.updatePerformance).Methods("PUT")
-	//r.HandleFunc("/place", api.updatePlace).Methods("PUT")
-	//r.HandleFunc("/poster", api.updatePoster).Methods("PUT")
-	//r.HandleFunc("/price", api.updatePrice).Methods("PUT")
-	//r.HandleFunc("/role", api.updateRole).Methods("PUT")
-	//r.HandleFunc("/schedule", api.updateSchedule).Methods("PUT")
-	//r.HandleFunc("/sector", api.updateSector).Methods("PUT")
-	//r.HandleFunc("/ticket", api.updateTicket).Methods("PUT")
-	//r.HandleFunc("/user", api.updateUser).Methods("PUT")
-
-	//r.HandleFunc("/users", api.createUser).Methods("POST")
+	r.HandleFunc("/account", api.updateAccount).Methods("PUT")
+	r.HandleFunc("/genre", api.updateGenre).Methods("PUT")
+	r.HandleFunc("/hall", api.updateHall).Methods("PUT")
+	r.HandleFunc("/location", api.updateLocation).Methods("PUT")
+	r.HandleFunc("/performance", api.updatePerformance).Methods("PUT")
+	r.HandleFunc("/place", api.updatePlace).Methods("PUT")
+	r.HandleFunc("/poster", api.updatePoster).Methods("PUT")
+	r.HandleFunc("/price", api.updatePrice).Methods("PUT")
+	r.HandleFunc("/role", api.updateRole).Methods("PUT")
+	r.HandleFunc("/schedule", api.updateSchedule).Methods("PUT")
+	r.HandleFunc("/sector", api.updateSector).Methods("PUT")
+	r.HandleFunc("/ticket", api.updateTicket).Methods("PUT")
+	r.HandleFunc("/user", api.updateUser).Methods("PUT")
 }
 
 func (a theaterAPI) getAllTickets(writer http.ResponseWriter, _ *http.Request) {
@@ -1058,4 +1056,290 @@ func (a theaterAPI) createUser(writer http.ResponseWriter, request *http.Request
 		return
 	}
 	writer.WriteHeader(http.StatusCreated)
+}
+
+func (a theaterAPI) updateAccount(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Account)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdateAccount(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update account"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updateGenre(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Genre)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdateGenre(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update genre"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updateHall(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Hall)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdateHall(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update hall"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updateLocation(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Location)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdateLocation(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update location"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updatePerformance(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Performance)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdatePerformance(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update performance"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updatePlace(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Place)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdatePlace(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update place"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updatePoster(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Poster)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdatePoster(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update poster"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updatePrice(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Price)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdatePrice(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update price"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updateRole(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Role)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdateRole(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update role"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updateSchedule(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Schedule)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdateSchedule(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update schedule"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updateSector(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Sector)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdateSector(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update sector"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updateTicket(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.Ticket)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdateTicket(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update ticket"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func (a theaterAPI) updateUser(writer http.ResponseWriter, request *http.Request) {
+	entity := new(data.User)
+	err := json.NewDecoder(request.Body).Decode(&entity)
+	if err != nil {
+		log.Printf("failed reading JSON: %s\n", err)
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if entity == nil {
+		log.Printf("failed empty JSON\n")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = a.data.UpdateUser(*entity)
+	if err != nil {
+		_, err := writer.Write([]byte("got an error when tried to update user"))
+		if err != nil {
+			log.Println(err)
+		}
+	}
 }
