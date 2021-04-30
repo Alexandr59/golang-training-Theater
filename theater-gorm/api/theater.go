@@ -82,7 +82,9 @@ func (a theaterAPI) getAllTickets(writer http.ResponseWriter, _ *http.Request) {
 	if err != nil {
 		_, err := writer.Write([]byte("got an error when tried to get tickets"))
 		if err != nil {
+			writer.WriteHeader(http.StatusInternalServerError)
 			log.Println(err)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(tickets)
@@ -98,7 +100,9 @@ func (a theaterAPI) getAllPosters(writer http.ResponseWriter, _ *http.Request) {
 	if err != nil {
 		_, err := writer.Write([]byte("got an error when tried to get posters"))
 		if err != nil {
+			writer.WriteHeader(http.StatusInternalServerError)
 			log.Println(err)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(posters)
@@ -115,7 +119,7 @@ func (a theaterAPI) getAllUsers(writer http.ResponseWriter, request *http.Reques
 	if n, err := strconv.Atoi(request.URL.Query().Get("idAccount")); err == nil {
 		account.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -124,7 +128,9 @@ func (a theaterAPI) getAllUsers(writer http.ResponseWriter, request *http.Reques
 	if err != nil {
 		_, err := writer.Write([]byte("got an error when tried to get users"))
 		if err != nil {
+			writer.WriteHeader(http.StatusInternalServerError)
 			log.Println(err)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(users)
@@ -140,7 +146,7 @@ func (a theaterAPI) getAccountById(writer http.ResponseWriter, request *http.Req
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -149,6 +155,8 @@ func (a theaterAPI) getAccountById(writer http.ResponseWriter, request *http.Req
 		_, err := writer.Write([]byte("got an error when tried to get account"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -164,7 +172,7 @@ func (a theaterAPI) getGenreById(writer http.ResponseWriter, request *http.Reque
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -173,6 +181,8 @@ func (a theaterAPI) getGenreById(writer http.ResponseWriter, request *http.Reque
 		_, err := writer.Write([]byte("got an error when tried to get genre"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -188,7 +198,7 @@ func (a theaterAPI) getHallById(writer http.ResponseWriter, request *http.Reques
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -197,6 +207,8 @@ func (a theaterAPI) getHallById(writer http.ResponseWriter, request *http.Reques
 		_, err := writer.Write([]byte("got an error when tried to get hall"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -212,7 +224,7 @@ func (a theaterAPI) getLocationById(writer http.ResponseWriter, request *http.Re
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -221,6 +233,8 @@ func (a theaterAPI) getLocationById(writer http.ResponseWriter, request *http.Re
 		_, err := writer.Write([]byte("got an error when tried to get location"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -236,7 +250,7 @@ func (a theaterAPI) getPerformanceById(writer http.ResponseWriter, request *http
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -245,6 +259,8 @@ func (a theaterAPI) getPerformanceById(writer http.ResponseWriter, request *http
 		_, err := writer.Write([]byte("got an error when tried to get performance"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -260,7 +276,7 @@ func (a theaterAPI) getPlaceById(writer http.ResponseWriter, request *http.Reque
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -269,6 +285,8 @@ func (a theaterAPI) getPlaceById(writer http.ResponseWriter, request *http.Reque
 		_, err := writer.Write([]byte("got an error when tried to get place"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -284,7 +302,7 @@ func (a theaterAPI) getPosterById(writer http.ResponseWriter, request *http.Requ
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -293,6 +311,8 @@ func (a theaterAPI) getPosterById(writer http.ResponseWriter, request *http.Requ
 		_, err := writer.Write([]byte("got an error when tried to get poster"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -308,7 +328,7 @@ func (a theaterAPI) getPriceById(writer http.ResponseWriter, request *http.Reque
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -317,6 +337,8 @@ func (a theaterAPI) getPriceById(writer http.ResponseWriter, request *http.Reque
 		_, err := writer.Write([]byte("got an error when tried to get price"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -332,7 +354,7 @@ func (a theaterAPI) getRoleById(writer http.ResponseWriter, request *http.Reques
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -341,6 +363,8 @@ func (a theaterAPI) getRoleById(writer http.ResponseWriter, request *http.Reques
 		_, err := writer.Write([]byte("got an error when tried to get role"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -356,7 +380,7 @@ func (a theaterAPI) getScheduleById(writer http.ResponseWriter, request *http.Re
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -365,6 +389,8 @@ func (a theaterAPI) getScheduleById(writer http.ResponseWriter, request *http.Re
 		_, err := writer.Write([]byte("got an error when tried to get schedule"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -380,7 +406,7 @@ func (a theaterAPI) getSectorById(writer http.ResponseWriter, request *http.Requ
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -389,6 +415,8 @@ func (a theaterAPI) getSectorById(writer http.ResponseWriter, request *http.Requ
 		_, err := writer.Write([]byte("got an error when tried to get sector"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -404,7 +432,7 @@ func (a theaterAPI) getTicketById(writer http.ResponseWriter, request *http.Requ
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -413,6 +441,8 @@ func (a theaterAPI) getTicketById(writer http.ResponseWriter, request *http.Requ
 		_, err := writer.Write([]byte("got an error when tried to get ticket"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -428,7 +458,7 @@ func (a theaterAPI) getUserById(writer http.ResponseWriter, request *http.Reques
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -437,6 +467,8 @@ func (a theaterAPI) getUserById(writer http.ResponseWriter, request *http.Reques
 		_, err := writer.Write([]byte("got an error when tried to get user"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(entry)
@@ -452,7 +484,7 @@ func (a theaterAPI) deleteAccountById(writer http.ResponseWriter, request *http.
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -461,6 +493,8 @@ func (a theaterAPI) deleteAccountById(writer http.ResponseWriter, request *http.
 		_, err := writer.Write([]byte("got an error when tried to delete account"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -470,7 +504,7 @@ func (a theaterAPI) deleteGenreById(writer http.ResponseWriter, request *http.Re
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -479,6 +513,8 @@ func (a theaterAPI) deleteGenreById(writer http.ResponseWriter, request *http.Re
 		_, err := writer.Write([]byte("got an error when tried to delete genre"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -488,7 +524,7 @@ func (a theaterAPI) deleteHallById(writer http.ResponseWriter, request *http.Req
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -497,6 +533,8 @@ func (a theaterAPI) deleteHallById(writer http.ResponseWriter, request *http.Req
 		_, err := writer.Write([]byte("got an error when tried to delete hall"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -506,7 +544,7 @@ func (a theaterAPI) deleteLocationById(writer http.ResponseWriter, request *http
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -515,6 +553,8 @@ func (a theaterAPI) deleteLocationById(writer http.ResponseWriter, request *http
 		_, err := writer.Write([]byte("got an error when tried to delete location"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -524,7 +564,7 @@ func (a theaterAPI) deletePerformanceById(writer http.ResponseWriter, request *h
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -533,6 +573,8 @@ func (a theaterAPI) deletePerformanceById(writer http.ResponseWriter, request *h
 		_, err := writer.Write([]byte("got an error when tried to delete performance"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -542,7 +584,7 @@ func (a theaterAPI) deletePlaceById(writer http.ResponseWriter, request *http.Re
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -551,6 +593,8 @@ func (a theaterAPI) deletePlaceById(writer http.ResponseWriter, request *http.Re
 		_, err := writer.Write([]byte("got an error when tried to delete place"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -560,7 +604,7 @@ func (a theaterAPI) deletePosterById(writer http.ResponseWriter, request *http.R
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -569,6 +613,8 @@ func (a theaterAPI) deletePosterById(writer http.ResponseWriter, request *http.R
 		_, err := writer.Write([]byte("got an error when tried to delete poster"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -578,7 +624,7 @@ func (a theaterAPI) deletePriceById(writer http.ResponseWriter, request *http.Re
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -587,6 +633,8 @@ func (a theaterAPI) deletePriceById(writer http.ResponseWriter, request *http.Re
 		_, err := writer.Write([]byte("got an error when tried to delete price"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -596,7 +644,7 @@ func (a theaterAPI) deleteRoleById(writer http.ResponseWriter, request *http.Req
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -605,6 +653,8 @@ func (a theaterAPI) deleteRoleById(writer http.ResponseWriter, request *http.Req
 		_, err := writer.Write([]byte("got an error when tried to delete role"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -614,7 +664,7 @@ func (a theaterAPI) deleteScheduleById(writer http.ResponseWriter, request *http
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -623,6 +673,8 @@ func (a theaterAPI) deleteScheduleById(writer http.ResponseWriter, request *http
 		_, err := writer.Write([]byte("got an error when tried to delete schedule"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -632,7 +684,7 @@ func (a theaterAPI) deleteSectorById(writer http.ResponseWriter, request *http.R
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -641,6 +693,8 @@ func (a theaterAPI) deleteSectorById(writer http.ResponseWriter, request *http.R
 		_, err := writer.Write([]byte("got an error when tried to delete sector"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -650,7 +704,7 @@ func (a theaterAPI) deleteTicketById(writer http.ResponseWriter, request *http.R
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -659,6 +713,8 @@ func (a theaterAPI) deleteTicketById(writer http.ResponseWriter, request *http.R
 		_, err := writer.Write([]byte("got an error when tried to delete ticket"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -668,7 +724,7 @@ func (a theaterAPI) deleteUserById(writer http.ResponseWriter, request *http.Req
 	if n, err := strconv.Atoi(request.URL.Query().Get("id")); err == nil {
 		entity.Id = n
 	} else {
-		log.Printf("failed reading id: %s\n", err)
+		log.Printf("failed reading id: %s", err)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -677,6 +733,8 @@ func (a theaterAPI) deleteUserById(writer http.ResponseWriter, request *http.Req
 		_, err := writer.Write([]byte("got an error when tried to delete user"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -699,6 +757,8 @@ func (a theaterAPI) createAccount(writer http.ResponseWriter, request *http.Requ
 		_, err := writer.Write([]byte("got an error when tried to create account"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -728,6 +788,8 @@ func (a theaterAPI) createGenre(writer http.ResponseWriter, request *http.Reques
 		_, err := writer.Write([]byte("got an error when tried to create genre"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -757,6 +819,8 @@ func (a theaterAPI) createHall(writer http.ResponseWriter, request *http.Request
 		_, err := writer.Write([]byte("got an error when tried to create hall"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -786,6 +850,8 @@ func (a theaterAPI) createLocation(writer http.ResponseWriter, request *http.Req
 		_, err := writer.Write([]byte("got an error when tried to create location"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -815,6 +881,8 @@ func (a theaterAPI) createPerformance(writer http.ResponseWriter, request *http.
 		_, err := writer.Write([]byte("got an error when tried to create performance"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -844,6 +912,8 @@ func (a theaterAPI) createPlace(writer http.ResponseWriter, request *http.Reques
 		_, err := writer.Write([]byte("got an error when tried to create place"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -873,6 +943,8 @@ func (a theaterAPI) createPoster(writer http.ResponseWriter, request *http.Reque
 		_, err := writer.Write([]byte("got an error when tried to create poster"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -902,6 +974,8 @@ func (a theaterAPI) createPrice(writer http.ResponseWriter, request *http.Reques
 		_, err := writer.Write([]byte("got an error when tried to create price"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -931,6 +1005,8 @@ func (a theaterAPI) createRole(writer http.ResponseWriter, request *http.Request
 		_, err := writer.Write([]byte("got an error when tried to create role"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -960,6 +1036,8 @@ func (a theaterAPI) createSchedule(writer http.ResponseWriter, request *http.Req
 		_, err := writer.Write([]byte("got an error when tried to create schedule"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -989,6 +1067,8 @@ func (a theaterAPI) createSector(writer http.ResponseWriter, request *http.Reque
 		_, err := writer.Write([]byte("got an error when tried to create sector"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -1018,6 +1098,8 @@ func (a theaterAPI) createTicket(writer http.ResponseWriter, request *http.Reque
 		_, err := writer.Write([]byte("got an error when tried to create ticket"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -1047,6 +1129,8 @@ func (a theaterAPI) createUser(writer http.ResponseWriter, request *http.Request
 		_, err := writer.Write([]byte("got an error when tried to create user"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 	err = json.NewEncoder(writer).Encode(id)
@@ -1076,6 +1160,8 @@ func (a theaterAPI) updateAccount(writer http.ResponseWriter, request *http.Requ
 		_, err := writer.Write([]byte("got an error when tried to update account"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1098,6 +1184,8 @@ func (a theaterAPI) updateGenre(writer http.ResponseWriter, request *http.Reques
 		_, err := writer.Write([]byte("got an error when tried to update genre"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1120,6 +1208,8 @@ func (a theaterAPI) updateHall(writer http.ResponseWriter, request *http.Request
 		_, err := writer.Write([]byte("got an error when tried to update hall"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1142,6 +1232,8 @@ func (a theaterAPI) updateLocation(writer http.ResponseWriter, request *http.Req
 		_, err := writer.Write([]byte("got an error when tried to update location"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1164,6 +1256,8 @@ func (a theaterAPI) updatePerformance(writer http.ResponseWriter, request *http.
 		_, err := writer.Write([]byte("got an error when tried to update performance"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1186,6 +1280,8 @@ func (a theaterAPI) updatePlace(writer http.ResponseWriter, request *http.Reques
 		_, err := writer.Write([]byte("got an error when tried to update place"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1208,6 +1304,8 @@ func (a theaterAPI) updatePoster(writer http.ResponseWriter, request *http.Reque
 		_, err := writer.Write([]byte("got an error when tried to update poster"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1230,6 +1328,8 @@ func (a theaterAPI) updatePrice(writer http.ResponseWriter, request *http.Reques
 		_, err := writer.Write([]byte("got an error when tried to update price"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1252,6 +1352,8 @@ func (a theaterAPI) updateRole(writer http.ResponseWriter, request *http.Request
 		_, err := writer.Write([]byte("got an error when tried to update role"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1274,6 +1376,8 @@ func (a theaterAPI) updateSchedule(writer http.ResponseWriter, request *http.Req
 		_, err := writer.Write([]byte("got an error when tried to update schedule"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1296,6 +1400,8 @@ func (a theaterAPI) updateSector(writer http.ResponseWriter, request *http.Reque
 		_, err := writer.Write([]byte("got an error when tried to update sector"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1318,6 +1424,8 @@ func (a theaterAPI) updateTicket(writer http.ResponseWriter, request *http.Reque
 		_, err := writer.Write([]byte("got an error when tried to update ticket"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
@@ -1340,6 +1448,8 @@ func (a theaterAPI) updateUser(writer http.ResponseWriter, request *http.Request
 		_, err := writer.Write([]byte("got an error when tried to update user"))
 		if err != nil {
 			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }

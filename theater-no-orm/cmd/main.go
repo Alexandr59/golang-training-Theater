@@ -56,7 +56,7 @@ func main() {
 		log.Fatalf("got an error when tried to call UpdateAccount method: %v", err)
 	}
 
-	//err = theaterData.DeleteEntry(data.Accounts_, 10)
+	//err = theaterData.DeleteEntry(data.DeleteAccounts, 10)
 	//if err != nil {
 	//	log.Fatalf("got an error when tried to call DeleteAccount method: %v", err)
 	//}

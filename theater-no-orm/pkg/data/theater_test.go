@@ -3,11 +3,12 @@ package data
 import (
 	"database/sql"
 	"errors"
-	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/stretchr/testify/assert"
 	"log"
 	"regexp"
 	"testing"
+
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/stretchr/testify/assert"
 )
 
 func NewMock() (*sql.DB, sqlmock.Sqlmock) {
@@ -156,7 +157,7 @@ var testUser1 = &User{
 	PhoneNumber: "+3753347362873267",
 }
 
-var testTable = Accounts_
+var testTable = DeleteAccounts
 var id = 11
 
 func TestTheaterData_ReadAllTickets(t *testing.T) {

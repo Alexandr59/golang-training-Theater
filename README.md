@@ -2,7 +2,7 @@
 
 ## Description
 
-##### Full Stack Application for storing theater
+##### Backend Application for storing theater
 
 |Path|Method|Description|
 |:---:|:---:|:---:|

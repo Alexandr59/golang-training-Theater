@@ -3,19 +3,19 @@ package data
 type Table int
 
 const (
-	Accounts_ Table = iota
-	Genres_
-	Halls_
-	Locations_
-	Performances_
-	Places_
-	Posters_
-	Prices_
-	Roles_
-	Schedules_
-	Sectors_
-	Tickets_
-	Users_
+	DeleteAccounts Table = iota
+	DeleteGenres
+	DeleteHalls
+	DeleteLocations
+	DeletePerformances
+	DeletePlaces
+	DeletePosters
+	DeletePrices
+	DeleteRoles
+	DeleteSchedules
+	DeleteSectors
+	DeleteTickets
+	DeleteUsers
 )
 
 func (t Table) String() string {
