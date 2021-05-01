@@ -52,7 +52,7 @@ var testPoster = &Poster{
 	Comment:    "Hi!!!",
 }
 
-var testPosterSelect = &SelectPoster{
+var testSelectPoster = &SelectPoster{
 	Id:                  2,
 	PerformanceName:     "The Dragon",
 	GenreName:           "a musical",
@@ -152,9 +152,9 @@ func (s *PosterSuite) TestTheaterData_FindByIdPosterErr() {
 func (s *PosterSuite) TestTheaterData_ReadAllPosters() {
 	rows := sqlmock.NewRows([]string{"poster.id", "performance.name", "genres.name", "performance.duration", "schedule.date",
 		"halls.name", "halls.capacity", "locations.address", "locations.phone_number", "poster.comment"}).
-		AddRow(testPosterSelect.Id, testPosterSelect.PerformanceName, testPosterSelect.GenreName, testPosterSelect.PerformanceDuration,
-			testPosterSelect.DateTime, testPosterSelect.HallName, testPosterSelect.HallCapacity, testPosterSelect.LocationAddress,
-			testPosterSelect.LocationPhoneNumber, testPosterSelect.Comment)
+		AddRow(testSelectPoster.Id, testSelectPoster.PerformanceName, testSelectPoster.GenreName, testSelectPoster.PerformanceDuration,
+			testSelectPoster.DateTime, testSelectPoster.HallName, testSelectPoster.HallCapacity, testSelectPoster.LocationAddress,
+			testSelectPoster.LocationPhoneNumber, testSelectPoster.Comment)
 	s.mock.ExpectQuery(`SELECT posters.id, performances.name, genres.name, performances.duration, schedules.date, 
 halls.name, halls.capacity, locations.address, locations.phone_number, posters.comment FROM "posters" 
 JOIN schedules on schedules.id = posters.schedule_id 
@@ -165,7 +165,7 @@ JOIN locations on halls.location_id = locations.id`).
 		WillReturnRows(rows)
 	res, err := s.data.ReadAllPosters()
 	require.NoError(s.T(), err)
-	require.Nil(s.T(), deep.Equal(testPosterSelect, &res[0]))
+	require.Nil(s.T(), deep.Equal(testSelectPoster, &res[0]))
 }
 
 func (s *PosterSuite) TestTheaterData_ReadAllPostersErr() {

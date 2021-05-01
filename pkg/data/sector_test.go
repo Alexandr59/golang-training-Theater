@@ -3,11 +3,11 @@ package data
 import (
 	"database/sql"
 	"errors"
-	"github.com/go-test/deep"
 	"regexp"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/go-test/deep"
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
