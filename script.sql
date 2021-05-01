@@ -61,7 +61,7 @@ alter table roles
 create unique index roles_id_uindex
     on roles (id);
 
-create table genre
+create table genres
 (
     id   serial       not null
         constraint genre_pk
@@ -69,11 +69,11 @@ create table genre
     name varchar(100) not null
 );
 
-alter table genre
+alter table genres
     owner to postgres;
 
 create unique index genre_id_uindex
-    on genre (id);
+    on genres (id);
 
 create table halls
 (
@@ -121,7 +121,7 @@ alter table users
 create unique index users_id_uindex
     on users (id);
 
-create table performance
+create table performances
 (
     id         serial       not null
         constraint performance_pk
@@ -132,17 +132,17 @@ create table performance
     name       varchar(100) not null,
     genre_id   integer      not null
         constraint performance_genre_id_fk
-            references genre,
+            references genres,
     duration   time         not null
 );
 
-alter table performance
+alter table performances
     owner to postgres;
 
 create unique index performance_id_uindex
-    on performance (id);
+    on performances (id);
 
-create table schedule
+create table schedules
 (
     id             serial    not null
         constraint schedule_pk
@@ -152,20 +152,20 @@ create table schedule
             references accounts,
     performance_id integer   not null
         constraint schedule_performance_id_fk
-            references performance,
+            references performances,
     date           timestamp not null,
     hall_id        integer   not null
         constraint schedule_halls_id_fk
             references halls
 );
 
-alter table schedule
+alter table schedules
     owner to postgres;
 
 create unique index schedule_id_uindex
-    on schedule (id);
+    on schedules (id);
 
-create table poster
+create table posters
 (
     id          serial       not null
         constraint poster_pk
@@ -175,15 +175,15 @@ create table poster
             references accounts,
     schedule_id integer      not null
         constraint poster_schedule_id_fk
-            references schedule,
+            references schedules,
     comment     varchar(255) not null
 );
 
-alter table poster
+alter table posters
     owner to postgres;
 
 create unique index poster_id_uindex
-    on poster (id);
+    on posters (id);
 
 create table places
 (
@@ -202,7 +202,7 @@ alter table places
 create unique index places_id_uindex
     on places (id);
 
-create table price
+create table prices
 (
     id             serial  not null
         constraint price_pk
@@ -215,34 +215,45 @@ create table price
             references sectors,
     performance_id integer not null
         constraint price_performance_id_fk
-            references performance,
+            references performances,
     price          integer not null
 );
 
-alter table price
+alter table prices
     owner to postgres;
 
 create unique index price_id_uindex
-    on price (id);
+    on prices (id);
 
 create table tickets
 (
-    id            serial                not null
+    id                    serial                  not null
         constraint tickets_pk
             primary key,
-    account_id    integer               not null
+    account_id            integer                 not null
         constraint tickets_accounts_id_fk
             references accounts,
-    schedule_id   integer               not null
+    schedule_id           integer                 not null
         constraint tickets_schedule_id_fk
-            references schedule,
-    place_id      integer               not null
+            references schedules,
+    place_id              integer                 not null
         constraint tickets_places_id_fk
             references places,
-    date_of_issue timestamp             not null,
-    paid          boolean default false not null,
-    reservation   boolean default false not null,
-    destroyed     boolean default false not null
+    date_of_issue         timestamp default now() not null,
+    paid                  boolean   default false not null,
+    reservation           boolean   default false not null,
+    destroyed             boolean   default false not null,
+    performance_duration  text,
+    sector_name           text,
+    price                 bigint,
+    hall_name             text,
+    date_time             text,
+    place                 bigint,
+    genre_name            text,
+    hall_capacity         bigint,
+    location_address      text,
+    location_phone_number text,
+    performance_name      text
 );
 
 alter table tickets
@@ -332,39 +343,39 @@ VALUES ('Manager-organizer');
 INSERT INTO roles(name)
 VALUES ('Viewer Assistant');
 
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('a musical');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('a melodrama');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('a comedy');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('a tragedy');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('a history play');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('a farce');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('an epic');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('an opera');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('a vaudeville');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('a pantomime');
-INSERT INTO genre (name)
+INSERT INTO genres (name)
 VALUES ('an operetta');
 
-INSERT INTO halls (account_id, name, capacity)
-VALUES (1, 'Small', 100);
-INSERT INTO halls (account_id, name, capacity)
-VALUES (1, 'Big', 3000);
-INSERT INTO halls (account_id, name, capacity)
-VALUES (1, 'Middle', 1500);
-INSERT INTO halls (account_id, name, capacity)
-VALUES (1, 'Dollhouse', 1000);
-INSERT INTO halls (account_id, name, capacity)
-VALUES (1, 'Happy', 500);
+INSERT INTO halls (account_id, name, capacity, location_id)
+VALUES (1, 'Small', 100, 1);
+INSERT INTO halls (account_id, name, capacity, location_id)
+VALUES (1, 'Big', 3000, 1);
+INSERT INTO halls (account_id, name, capacity, location_id)
+VALUES (1, 'Middle', 1500, 1);
+INSERT INTO halls (account_id, name, capacity, location_id)
+VALUES (1, 'Dollhouse', 1000, 1);
+INSERT INTO halls (account_id, name, capacity, location_id)
+VALUES (1, 'Happy', 500, 1);
 
 INSERT INTO users(account_id, first_name, last_name, role_id, location_id, phone_number)
 VALUES (1, 'Charles', 'Dean', 1, 1, '+375445239375');
@@ -381,81 +392,81 @@ VALUES (1, 'Dustin', 'Mason', 6, 1, '+375445232125');
 INSERT INTO users(account_id, first_name, last_name, role_id, location_id, phone_number)
 VALUES (1, 'David', 'Bradley', 7, 1, '+375445209121');
 
-INSERT INTO performance (account_id, name, genre_id, duration)
+INSERT INTO performances (account_id, name, genre_id, duration)
 VALUES (1, 'The Dragon', 1, '4:00');
-INSERT INTO performance (account_id, name, genre_id, duration)
+INSERT INTO performances (account_id, name, genre_id, duration)
 VALUES (1, 'Chasing two hares', 5, '2:00');
-INSERT INTO performance (account_id, name, genre_id, duration)
+INSERT INTO performances (account_id, name, genre_id, duration)
 VALUES (1, 'Life and destiny', 3, '3:00');
-INSERT INTO performance (account_id, name, genre_id, duration)
+INSERT INTO performances (account_id, name, genre_id, duration)
 VALUES (1, 'And the day lasts longer than a century', 10, '5:00');
-INSERT INTO performance (account_id, name, genre_id, duration)
+INSERT INTO performances (account_id, name, genre_id, duration)
 VALUES (1, 'Master and Margarita', 8, '7:00');
 
-INSERT INTO schedule (account_id, performance_id, date)
-VALUES (1, 1, '2021-04-13 16:00');
-INSERT INTO schedule (account_id, performance_id, date)
-VALUES (1, 2, '2021-04-25 13:00');
-INSERT INTO schedule (account_id, performance_id, date)
-VALUES (1, 3, '2021-04-19 19:00');
-INSERT INTO schedule (account_id, performance_id, date)
-VALUES (1, 4, '2021-05-10 14:00');
-INSERT INTO schedule (account_id, performance_id, date)
-VALUES (1, 5, '2021-04-15 21:00');
-
-INSERT INTO schedule (account_id, performance_id, date, hall_id)
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
 VALUES (1, 1, '2021-04-13 16:00', 3);
-INSERT INTO schedule (account_id, performance_id, date, hall_id)
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
 VALUES (1, 2, '2021-04-25 13:00', 2);
-INSERT INTO schedule (account_id, performance_id, date, hall_id)
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
 VALUES (1, 3, '2021-04-19 19:00', 1);
-INSERT INTO schedule (account_id, performance_id, date, hall_id)
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
 VALUES (1, 4, '2021-05-10 14:00', 4);
-INSERT INTO schedule (account_id, performance_id, date, hall_id)
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
 VALUES (1, 5, '2021-04-15 21:00', 5);
 
-INSERT INTO poster (account_id, schedule_id, comment)
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
+VALUES (1, 1, '2021-04-13 16:00', 3);
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
+VALUES (1, 2, '2021-04-25 13:00', 2);
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
+VALUES (1, 3, '2021-04-19 19:00', 1);
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
+VALUES (1, 4, '2021-05-10 14:00', 4);
+INSERT INTO schedules (account_id, performance_id, date, hall_id)
+VALUES (1, 5, '2021-04-15 21:00', 5);
+
+INSERT INTO posters (account_id, schedule_id, comment)
 VALUES (1, 6, 'We invite you! It will be cool!!!');
-INSERT INTO poster (account_id, schedule_id, comment)
+INSERT INTO posters (account_id, schedule_id, comment)
 VALUES (1, 7, 'We invite you! It will be cool!!!');
-INSERT INTO poster (account_id, schedule_id, comment)
+INSERT INTO posters (account_id, schedule_id, comment)
 VALUES (1, 8, 'We invite you! It will be cool!!!');
-INSERT INTO poster (account_id, schedule_id, comment)
+INSERT INTO posters (account_id, schedule_id, comment)
 VALUES (1, 9, 'We invite you! It will be cool!!!');
-INSERT INTO poster (account_id, schedule_id, comment)
+INSERT INTO posters (account_id, schedule_id, comment)
 VALUES (1, 10, 'We invite you! It will be cool!!!');
 
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 9, 1, 40);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 9, 2, 34);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 9, 3, 97);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 9, 4, 76);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 9, 5, 88);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 10, 1, 39);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 10, 2, 33);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 10, 3, 78);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 11, 1, 38);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 12, 1, 37);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 13, 1, 36);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 14, 1, 35);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 15, 1, 34);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 16, 1, 33);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 17, 1, 32);
-INSERT INTO price (account_id, sector_id, performance_id, price)
+INSERT INTO prices (account_id, sector_id, performance_id, price)
 VALUES (1, 18, 1, 31);
 
 INSERT INTO tickets (account_id, schedule_id, place_id, date_of_issue, paid)
