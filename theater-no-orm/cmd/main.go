@@ -1,11 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
-	"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/data"
-	"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/db"
+	//"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/data"
+	//"github.com/Alexandr59/golang-training-Theater/theater-no-orm/pkg/db"
+	"golang-training-Theater/theater-no-orm/pkg/data"
+	"golang-training-Theater/theater-no-orm/pkg/db"
 )
 
 var (
@@ -45,16 +48,16 @@ func main() {
 	}
 	theaterData := data.NewTheaterData(conn)
 
-	err = theaterData.UpdateAccount(data.Account{
-		Id:          11,
-		FirstName:   "RRRRR",
-		LastName:    "tttttt",
-		PhoneNumber: "435345435345",
-		Email:       "fknvzdfkjnv",
-	})
-	if err != nil {
-		log.Fatalf("got an error when tried to call UpdateAccount method: %v", err)
-	}
+	//err = theaterData.UpdateAccount(data.Account{
+	//	Id:          11,
+	//	FirstName:   "RRRRR",
+	//	LastName:    "tttttt",
+	//	PhoneNumber: "435345435345",
+	//	Email:       "fknvzdfkjnv",
+	//})
+	//if err != nil {
+	//	log.Fatalf("got an error when tried to call UpdateAccount method: %v", err)
+	//}
 
 	//err = theaterData.DeleteEntry(data.DeleteAccounts, 10)
 	//if err != nil {
@@ -70,7 +73,7 @@ func main() {
 	//	log.Fatalf("got an error when tried to call AddHall method: %v", err)
 	//}
 
-	//err = theaterData.AddHall(data.Hall{
+	//id, err := theaterData.AddHall(data.Hall{
 	//	AccountId:  2,
 	//	Name:       "HappyHall",
 	//	Capacity:   500,
@@ -79,38 +82,40 @@ func main() {
 	//if err != nil {
 	//	log.Fatalf("got an error when tried to call AddHall method: %v", err)
 	//}
+	//fmt.Println("id: ", id)
 
-	//err = theaterData.AddAccount(data.Account{
-	//	FirstName:   "Dim",
-	//	LastName:    "Ivanov",
-	//	PhoneNumber: "+375296574897",
-	//	Email:       "dimaivanov@gmail.com",
-	//})
+	id, err := theaterData.AddAccount(data.Account{
+		FirstName:   "Dim",
+		LastName:    "Ivanov",
+		PhoneNumber: "+375296574897",
+		Email:       "dimaivanov@gmail.com",
+	})
+	if err != nil {
+		log.Fatalf("got an error when tried to call AddAccount method: %v", err)
+	}
+	fmt.Println("id: ", id)
+
+	//tickets, err := theaterData.ReadAllTickets()
 	//if err != nil {
-	//	log.Fatalf("got an error when tried to call AddAccount method: %v", err)
+	//	log.Fatalf("got an error when tried to call ReadAllTickets method: %v", err)
 	//}
-
-	tickets, err := theaterData.ReadAllTickets()
-	if err != nil {
-		log.Fatalf("got an error when tried to call ReadAllTickets method: %v", err)
-	}
-	for _, el := range tickets {
-		log.Println(el)
-	}
-
-	posters, err := theaterData.ReadAllPosters()
-	if err != nil {
-		log.Fatalf("got an error when tried to call ReadAllPosters method: %v", err)
-	}
-	for _, el := range posters {
-		log.Println(el)
-	}
-
-	users, err := theaterData.ReadAllUsers(data.Account{Id: 1})
-	if err != nil {
-		log.Fatalf("got an error when tried to call ReadAllUsers method: %v", err)
-	}
-	for _, el := range users {
-		log.Println(el)
-	}
+	//for _, el := range tickets {
+	//	log.Println(el)
+	//}
+	//
+	//posters, err := theaterData.ReadAllPosters()
+	//if err != nil {
+	//	log.Fatalf("got an error when tried to call ReadAllPosters method: %v", err)
+	//}
+	//for _, el := range posters {
+	//	log.Println(el)
+	//}
+	//
+	//users, err := theaterData.ReadAllUsers(data.Account{Id: 1})
+	//if err != nil {
+	//	log.Fatalf("got an error when tried to call ReadAllUsers method: %v", err)
+	//}
+	//for _, el := range users {
+	//	log.Println(el)
+	//}
 }

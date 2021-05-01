@@ -207,109 +207,226 @@ func (u TheaterData) ReadAllUsers(account Account) ([]SelectUser, error) {
 	return users, nil
 }
 
-func (u TheaterData) AddAccount(account Account) error {
-	_, err := u.db.Exec(insertAccount, account.FirstName, account.LastName, account.PhoneNumber, account.Email)
+func (u TheaterData) AddAccount(account Account) (int, error) {
+	rows, err := u.db.Query(insertAccount, account.FirstName, account.LastName, account.PhoneNumber, account.Email)
 	if err != nil {
-		return fmt.Errorf("can't inser account to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser account to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id account to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id account to database")
+	}
 }
 
-func (u TheaterData) AddGenre(genre Genre) error {
-	_, err := u.db.Exec(insertGenre, genre.Name)
+func (u TheaterData) AddGenre(genre Genre) (int, error) {
+	rows, err := u.db.Query(insertGenre, genre.Name)
 	if err != nil {
-		return fmt.Errorf("can't inser genre to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser genre to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id genre to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id genre to database")
+	}
 }
 
-func (u TheaterData) AddHall(hall Hall) error {
-	_, err := u.db.Exec(insertHall, hall.AccountId, hall.Name, hall.Capacity, hall.LocationId)
+func (u TheaterData) AddHall(hall Hall) (int, error) {
+	rows, err := u.db.Query(insertHall, hall.AccountId, hall.Name, hall.Capacity, hall.LocationId)
 	if err != nil {
-		return fmt.Errorf("can't inser hall to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser hall to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id hall to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id hall to database")
+	}
 }
 
-func (u TheaterData) AddLocation(location Location) error {
-	_, err := u.db.Exec(insertLocation, location.AccountId, location.Address, location.PhoneNumber)
+func (u TheaterData) AddLocation(location Location) (int, error) {
+	rows, err := u.db.Query(insertLocation, location.AccountId, location.Address, location.PhoneNumber)
 	if err != nil {
-		return fmt.Errorf("can't inser location to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser location to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id location to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id location to database")
+	}
 }
 
-func (u TheaterData) AddPerformance(performance Performance) error {
-	_, err := u.db.Exec(insertPerformance, performance.AccountId, performance.Name, performance.GenreId, performance.Duration)
+func (u TheaterData) AddPerformance(performance Performance) (int, error) {
+	rows, err := u.db.Query(insertPerformance, performance.AccountId, performance.Name, performance.GenreId, performance.Duration)
 	if err != nil {
-		return fmt.Errorf("can't inser Performance to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser Performance to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id performance to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id performance to database")
+	}
 }
 
-func (u TheaterData) AddPlace(place Place) error {
-	_, err := u.db.Exec(insertPlace, place.SectorId, place.Name)
+func (u TheaterData) AddPlace(place Place) (int, error) {
+	rows, err := u.db.Query(insertPlace, place.SectorId, place.Name)
 	if err != nil {
-		return fmt.Errorf("can't inser Place to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser Place to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id place to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id place to database")
+	}
 }
 
-func (u TheaterData) AddPoster(poster Poster) error {
-	_, err := u.db.Exec(insertPoster, poster.AccountId, poster.ScheduleId, poster.Comment)
+func (u TheaterData) AddPoster(poster Poster) (int, error) {
+	rows, err := u.db.Query(insertPoster, poster.AccountId, poster.ScheduleId, poster.Comment)
 	if err != nil {
-		return fmt.Errorf("can't inser SelectPoster to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser Poster to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id poster to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id poster to database")
+	}
 }
 
-func (u TheaterData) AddPrice(price Price) error {
-	_, err := u.db.Exec(insertPrice, price.AccountId, price.SectorId, price.PerformanceId, price.Price)
+func (u TheaterData) AddPrice(price Price) (int, error) {
+	rows, err := u.db.Query(insertPrice, price.AccountId, price.SectorId, price.PerformanceId, price.Price)
 	if err != nil {
-		return fmt.Errorf("can't inser Price to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser Price to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id price to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id price to database")
+	}
 }
 
-func (u TheaterData) AddRole(role Role) error {
-	_, err := u.db.Exec(insertRole, role.Name)
+func (u TheaterData) AddRole(role Role) (int, error) {
+	rows, err := u.db.Query(insertRole, role.Name)
 	if err != nil {
-		return fmt.Errorf("can't inser Role to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser Role to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id role to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id role to database")
+	}
 }
 
-func (u TheaterData) AddSchedule(schedule Schedule) error {
-	_, err := u.db.Exec(insertSchedule, schedule.AccountId, schedule.PerformanceId, schedule.Date, schedule.HallId)
+func (u TheaterData) AddSchedule(schedule Schedule) (int, error) {
+	rows, err := u.db.Query(insertSchedule, schedule.AccountId, schedule.PerformanceId, schedule.Date, schedule.HallId)
 	if err != nil {
-		return fmt.Errorf("can't inser Schedule to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser Schedule to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id schedule to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id schedule to database")
+	}
 }
 
-func (u TheaterData) AddSector(sector Sector) error {
-	_, err := u.db.Exec(insertSector, sector.Name)
+func (u TheaterData) AddSector(sector Sector) (int, error) {
+	rows, err := u.db.Query(insertSector, sector.Name)
 	if err != nil {
-		return fmt.Errorf("can't inser Sector to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser Sector to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id sector to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id sector to database")
+	}
 }
 
-func (u TheaterData) AddTicket(ticket Ticket) error {
-	_, err := u.db.Exec(insertTicket, ticket.AccountId, ticket.ScheduleId,
+func (u TheaterData) AddTicket(ticket Ticket) (int, error) {
+	rows, err := u.db.Query(insertTicket, ticket.AccountId, ticket.ScheduleId,
 		ticket.PlaceId, ticket.DateOfIssue, ticket.Paid, ticket.Reservation, ticket.Destroyed)
 	if err != nil {
-		return fmt.Errorf("can't inser SelectTicket to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser Ticket to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id ticket to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id ticket to database")
+	}
 }
 
-func (u TheaterData) AddUser(user User) error {
-	_, err := u.db.Exec(insertUser, user.AccountId, user.FirstName, user.LastName, user.RoleId, user.LocationId, user.PhoneNumber)
+func (u TheaterData) AddUser(user User) (int, error) {
+	rows, err := u.db.Query(insertUser, user.AccountId, user.FirstName, user.LastName, user.RoleId, user.LocationId, user.PhoneNumber)
 	if err != nil {
-		return fmt.Errorf("can't inser SelectUser to database, error: %w", err)
+		return -1, fmt.Errorf("can't inser User to database, error: %w", err)
 	}
-	return nil
+	if rows.Next() {
+		var id int
+		err = rows.Scan(&id)
+		if err != nil {
+			return -1, fmt.Errorf("can't get last id user to database, error: %w", err)
+		}
+		return id, nil
+	} else {
+		return -1, fmt.Errorf("can't get last id user to database")
+	}
 }
 
 func (u TheaterData) DeleteEntry(table Table, id int) error {
