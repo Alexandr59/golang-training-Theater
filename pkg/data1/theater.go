@@ -1,4 +1,4 @@
-package data
+package data1
 
 import (
 	"fmt"
@@ -552,6 +552,7 @@ func (u TheaterData) FindByIdAccount(entry Account) (Account, error) {
 	}
 	return entry, nil
 }
+
 func (u TheaterData) FindByIdGenre(entry Genre) (Genre, error) {
 	result := u.db.First(&entry)
 	if result.Error != nil {
