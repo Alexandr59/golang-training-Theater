@@ -1,16 +1,16 @@
 package main
 
 import (
-	api2 "golang-training-Theater/api"
 	"log"
 	"net"
 	"net/http"
 	"os"
 
 	"github.com/gorilla/mux"
+
 	//"github.com/Alexandr59/golang-training-Theater/api"
-	"github.com/Alexandr59/golang-training-Theater/pkg/data"
 	"github.com/Alexandr59/golang-training-Theater/pkg/db"
+	"golang-training-Theater/api"
 )
 
 var (
@@ -48,10 +48,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("can't connect to database, error: %v", err)
 	}
-	theaterData := data.NewTheaterData(conn)
-
 	r := mux.NewRouter()
-	api2.ServerTheaterResource(r, *theaterData)
+	api.ServerTheaterResource(r, conn)
 	r.Use(mux.CORSMethodMiddleware(r))
 
 	listener, err := net.Listen("tcp", ":8080")
