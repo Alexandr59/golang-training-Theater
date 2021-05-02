@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"golang-training-Theater/pkg/data"
+	"github.com/Alexandr59/golang-training-Theater/pkg/data"
 )
 
 type hallAPI struct {

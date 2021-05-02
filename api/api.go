@@ -4,8 +4,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 
-	//"github.com/Alexandr59/golang-training-Theater/pkg/data"
-	"golang-training-Theater/pkg/data"
+	"github.com/Alexandr59/golang-training-Theater/pkg/data"
 )
 
 func ServerTheaterResource(r *mux.Router, conn *gorm.DB) {

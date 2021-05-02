@@ -10,7 +10,6 @@ import (
 func GetConnection(host, port, user, dbname, password, sslmode string) (*DB, error) {
 	dsn := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
 		host, port, user, dbname, password, sslmode)
-	//connection, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	connection, err := Open("postgres", dsn)
 
 	if err != nil {
